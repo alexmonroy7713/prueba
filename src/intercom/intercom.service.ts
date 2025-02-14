@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { IntercomGateway } from './websockets/intercom.gateway';
   
 
  
@@ -6,6 +7,13 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 
 export class IntercomService {
+  constructor(private readonly intercomGateway: IntercomGateway) {}
+
+  // Método para procesar feedback y enviarlo al frontend en tiempo real
+  processFeedback(feedback: any) {
+    console.log('Nuevo feedback recibido:', feedback);
+    this.intercomGateway.sendFeedback(feedback);
+  }
 
  
   

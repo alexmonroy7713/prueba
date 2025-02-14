@@ -20,23 +20,20 @@ export class IntercomController {
    async submit(@Body() body: any) {
     console.log('Datos recibidos de Intercom:', body);
 
-    // Extraer los valores enviados por el usuario
-    const patientName = body.input_values?.patient_name || 'Sin nombre';
-    const symptoms = body.input_values?.symptoms || 'No especificado';
-    const disease = body.input_values?.disease || 'No especificado';
-    const prescription = body.input_values?.prescription || 'No especificado';
-    const componentId = body.component_id;
-
-    const datosAExtraer = {
-      patientName,
-      symptoms,
-      disease,
-      prescription,
-      componentId
+    const feedbackData = {
+      patientName: body.input_values?.patient_name || 'Sin nombre',
+      symptoms: body.input_values?.symptoms || 'No especificado',
+      disease: body.input_values?.disease || 'No especificado',
+      prescription: body.input_values?.prescription || 'No especificado',
+      componentId: body.component_id,
     };
-    if (body.component_id === 'submit_button') {
-      const extraidos = ExtraesDatos(datosAExtraer);
+
+    // Enviar feedback al frontend en tiempo real
+     if (body.component_id === 'submit_button'){
+       await  this.intercomService.processFeedback(feedbackData);
+
     }
+    
 
       
  
